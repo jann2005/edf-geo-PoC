@@ -3,6 +3,8 @@
 <link rel="import" href="../../bower_components/px-deck-selector/px-deck-selector.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="./styles/dashboards-view-styles.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html" />
+<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">
 <!-- local px-deck -->
 <link rel="import" href="../../elements/px-deck/px-deck-index.html">
 <dom-module id="dashboards-view">
@@ -10,19 +12,159 @@
     <script type="text/javascript" src="../../bower_components/es6-promise/es6-promise.min.js"></script>
     <style include="dashboards-view-styles">
       .modal-container {
-        height: calc(100vh - 200px);
+        /*height: calc(100vh - 200px);*/
         background-color: white;
         margin: 15px 0;
         border-radius: 5px;
       }
-
+      
       .container {
         min-height: calc(100vh - 170px);
+      }
+      
+      .header {
+        height: 70px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: #3e87e8;
+        color: white;
+        padding: 10px 45px;
+      }
+      
+      .header .header-sub-title {
+        height: 25px;
+      }
+      
+      .header .header-title {
+        height: 45px;
+        font-size: 1.5em;
+      }
+      
+      .modal-toolbar {
+        padding: 10px 45px;
+        margin: 0;
+        border-bottom: 1px solid whitesmoke;
+      }
+      
+      .item-option {
+        margin-right: 20px;
+      }
+      
+      .item-option input {
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+      
+      .item-option label {
+        font-weight: 500;
+      }
+      
+      .statistic-container {
+        margin: 0;
+        padding: 10px 0;
+      }
+      
+      .circle-container {
+        width: 90px;
+        margin: auto;
+      }
+      
+      .chart-container>div {
+        margin: 30px 0 0;
+        height: 400px;
+      }
+      
+       :host {
+        --px-dropdown-bg-color--default: $white;
+        --px-dropdown-border-color: $white;
+        --px-dropdown-bg-color--hover: $white;
+        --px-dropdown-bg-color--opened: $white;
+        --px-dropdown-content-background-color: $white;
+        --px-dropdown-content-border-color: whitesmoke;
+        --px-dropdown-content-margin: 10px;
       }
 
     </style>
     <div class="container">
       <div class="modal-container">
+        <div class="header">
+          <div class="header-sub-title">
+            <div style="float: left; line-height: 25px;">Thursday, February 09, 2017 12:25PM</div>
+            <div style="float: right; line-height: 25px;"><i class="fa fa-refresh"></i></div>
+          </div>
+          <div class="header-title layout">
+            <div class="layout__item u-1/3">80 kWh</div>
+            <div class="layout__item u-1/3" style="text-align: center; line-height: 5px;">Total Consumption</div>
+            <div class="layout__item u-1/3" style="text-align: right; line-height: 33px; font-size: initial;">kWh</div>
+          </div>
+        </div>
+        <div class="modal-toolbar layout">
+          <div class="layout__item u-1/2">
+            <div class="layout" style="line-height: 30.97px;">
+              <div class="item-option">
+                <label><input type="checkbox" value="">Electricity</label>
+              </div>
+              <div class="item-option">
+                <label><input type="checkbox" value="">Gas</label>
+              </div>
+              <div class="item-option">
+                <label><input type="checkbox" value="">Total</label>
+              </div>
+            </div>
+          </div>
+          <div class="layout__item u-1/2" style="text-align: right;">
+            <div style="width: 100px; float: right;">
+              <px-dropdown display-value="Current">
+                <px-dropdown-content class="px-dropdown-content" max-cont-character-width="10" extend-dropdown="true" extend-dropdown-by="15"
+                  items='[{"key":"one", "val": "Current"}, {"key":"two", "val": "Daily"}, {"key":"three", "val": "Monthly"}]'>
+                </px-dropdown-content>
+              </px-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="layout layout--center statistic-container">
+          <div class="layout__item u-2/3">
+            <div class="layout layout--center statistic-container">
+              <div class="layout__item u-1/2">
+                <div class="circle-container">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                    viewBox="0 0 500 500">
+                    <g>
+                      <circle style="fill:#faa43a;stroke:#faa43a;stroke-width:8;stroke-miterlimit:10;" cx="250" cy="250" r="200">
+                      </circle>
+                      <text x="50%" y="55%" font-size="130" text-anchor="middle" fill="white" stroke="white" stroke-width="10px" dy=".1em">65</text>
+                      <text x="50%" y="75%" font-size="70" text-anchor="middle" fill="white" dy=".1em">kWh</text>
+                    </g>
+                  </svg>
+                </div>
+                <div style="text-align: center;">
+                  <h4 style="margin-top: 0;">Everage Consumption</h4>
+                </div>
+              </div>
+              <div class="layout__item u-1/2">
+                <div class="circle-container">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                    viewBox="0 0 500 500">
+                    <g>
+                      <circle style="fill:#faa43a;stroke:#faa43a;stroke-width:8;stroke-miterlimit:10;" cx="250" cy="250" r="200">
+                      </circle>
+                      <text x="50%" y="55%" font-size="130" text-anchor="middle" fill="white" stroke="white" stroke-width="10px" dy=".1em">125</text>
+                      <text x="50%" y="75%" font-size="70" text-anchor="middle" fill="white" dy=".1em">kWh</text>
+                    </g>
+                  </svg>
+                </div>
+                <div style="text-align: center;">
+                  <h4 style="margin-top: 0;">Peek Consumption</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layout layout--center chart-container">
+          <div class="layout__item u-2/3">
+            <div id="chart"></div>
+          </div>
+        </div>
       </div>
     </div>
   </template>
@@ -32,11 +174,104 @@
       is: 'dashboards-view',
 
       properties: {
-
+        chart: {
+          type: Object
+        }
       },
 
       ready: function ready() {
+        setTimeout(function () {
+          this.chart = new Highcharts.Chart({
+            chart: {
+              type: 'column',
+              renderTo: 'chart'
+            },
+            title: {
+              text: ''
+            },
+            subTitle: {
+              text: ''
+            },
+            tooltip: {
+              headerFormat: '<b>{point.x}</b><br/>',
+              pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            },
+            legend: {
+              align: 'right',
+              x: -30,
+              verticalAlign: 'top',
+              y: 25,
+              floating: true,
+              backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+              borderColor: '#CCC',
+              borderWidth: 1,
+              shadow: false
+            },
+            rangeSelector: {
+              enabled: false,
+              allButtonsEnabled: false
+            },
+            credits: {
+              enabled: false
+            },
+            exporting: {
+              buttons: {
+                contextButton: {
+                  enabled: false
+                }
+              }
+            },
+            // xAxis: {
+            //   type: 'category',
+            //   labels: {
+            //     rotation: -45,
+            //     style: {
+            //       fontSize: '13px',
+            //       fontFamily: 'Verdana, sans-serif'
+            //     }
+            //   }
+            // },
+            yAxis: {
+              min: 0,
+              title: {
+                text: 'Total consumption'
+              },
+              stackLabels: {
+                enabled: true,
+                style: {
+                  fontWeight: 'bold',
+                  color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+              }
+            },
+            navigator: {
+              enabled: false
+            },
+            scrollbar: {
+              enabled: false
+            },
+            plotOptions: {
+              column: {
+                stacking: 'normal',
+                dataLabels: {
+                  enabled: true,
+                  color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                }
+              }
+            },
+            series: [{
+              name: 'Gas',
+              data: [2, 2, 3, 2, 1]
+            }, {
+              name: 'Electricity',
+              data: [3, 4, 4, 2, 5]
+            }]
+          });
+        }.bind(this), 1000);
+      },
 
+      _fakeData: function () {
+        return Math.floor(Math.random() * 100) + 1;
       },
 
     });
