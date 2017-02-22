@@ -1,0 +1,174 @@
+body{
+	background-color: #DFDFDF;
+}
+ul{
+	padding-left: 0;
+}
+.header {
+	background-color: #D94000;	
+}
+.row.tabs{
+	background-color: #fff;
+}
+.row.tabs ul{
+	margin-bottom: 0;
+}
+.tabs ul li {
+	padding: 10px 27px;
+}
+.row.tabs .list-inline{
+	margin-left: 0;
+}
+.row.tabs ul li.active{
+	border-bottom: 1px solid #D94000;
+}
+.row.tabs ul li a{
+	color: #cecece;
+	text-decoration: none;
+}
+.row.tabs ul li.active a{
+	color: #D94000;
+}
+.subHeader {
+	background-color: #71A4E3;
+	border-radius: 10px;
+	background: linear-gradient(#71A4E3,#A4CDF9);	
+	padding: 10px 5px 0px;
+}
+.subHeader ul li {
+	color: white;
+}
+.outstandAmount{
+	background-color: blue;
+    border-radius: 10px;
+}
+.outstandAmount ul li{
+	color: white;
+}
+.outstandAmount ul{
+	list-style: none;
+	padding: 0px;
+}
+.exploreMore{
+	background-color: white;
+    border-radius: 10px;
+    padding: 0;
+}
+.exploreMore ul li{
+	color: black;
+}
+.exploreMore ul{
+	list-style: none;
+	padding: 5px 15px 0px;
+}
+.payNowBtn {
+	margin-bottom: 10px;
+}
+.usageSummary {
+	background-color: white;
+	border-radius: 10px;
+	margin-left: 25px; 
+}
+.usageSummary .row:nth-child(1){
+	    padding: 5px 10px 15px;
+}
+.mt15{	
+    margin-top: 15px;
+}
+.borderBtm{
+	border-bottom: 1px solid #DFDFDF;
+}
+.userImg{
+	width: 50px ;
+	height: 60px;
+	padding: 10px;
+}
+.total{
+	color:#D94000;
+}
+.consumptions{
+	background-color: orange;
+	padding: 5px 15px;
+}
+.consumptions span{
+	color: #fff;
+}
+.exploreText{
+	padding: 5px 15px 15px;
+}
+.exploreText p{
+	color: #D94000;
+}
+.macotImg{
+	height: 80px;
+    margin-right: -25px
+}
+.lastmonthUnits{
+	color: green;
+    font-size: 18px;
+    width: 40%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+.lastmonthUnits sup,
+.forecastUnits sup,
+.presentUnits sup{
+	color: #ddd;
+	margin-left: 3px;
+}
+.lastmonthPrice{
+	font-size: 18px;
+	margin: 5px auto;
+	text-align: left;
+    padding-left: 34%;
+}
+.defaultChart{
+	position: relative;
+}
+.present{
+	position: absolute;
+    top: 30%;
+    left: 40%;
+}
+.forecastUnits{
+	color: red;
+    font-size: 18px;
+    width: 40%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+.forecastPrice{
+	font-size: 18px;
+	margin: 5px auto; 
+	text-align: left;
+    padding-left: 34%;
+}
+.presentUnits{
+	font-size: 30px;
+	color: red;
+}
+.percentCircle{	
+    height: 65%;
+    width: 65%;
+    margin: 0 auto;
+}
+.gas{
+	border-bottom: 1px solid red;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.mb15{
+	margin-bottom: 15px;
+}
+.forecastPrice{
+	font-size: 18px;
+}
+.forecastHour{
+	font-size: 16px;
+}
+.presentUnits sup{
+	font-size: 14px;
+    color: #555;
+    top: -1.5em;
+    margin-left: 3px;
+}
