@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-context-browser/px-context-browser.html">
+<link rel="import" href="../../bower_components/px-deck-selector/px-deck-selector.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./styles/dashboards-view-styles.html">
+<!-- local px-deck -->
+<link rel="import" href="../../elements/px-deck/px-deck-index.html">
+<dom-module id="dashboards-view">
+  <template>
+    <script type="text/javascript" src="../../bower_components/es6-promise/es6-promise.min.js"></script>
+    <style include="dashboards-view-styles">
+      .modal-container {
+        height: calc(100vh - 200px);
+        background-color: white;
+        margin: 15px 0;
+        border-radius: 5px;
+      }
+
+      .container {
+        min-height: calc(100vh - 170px);
+      }
+
+    </style>
+    <div class="container">
+      <div class="modal-container">
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+
+      is: 'dashboards-view',
+
+      properties: {
+
+      },
+
+      ready: function ready() {
+
+      },
+
+    });
+
+  </script>
+</dom-module>

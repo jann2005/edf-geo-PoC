@@ -1,0 +1,272 @@
+$inuit-enable-layout--tiny: true;
+$inuit-enable-layout--small: true;
+$inuit-enable-layout--large: true;
+$inuit-enable-layout--huge: true;
+$inuit-enable-layout--flush: true;
+$inuit-enable-layout--rev: true;
+$inuit-enable-layout--middle: true;
+$inuit-enable-layout--bottom: true;
+$inuit-enable-layout--full: true;
+$inuit-enable-layout--right: true;
+$inuit-enable-layout--center: true;
+$inuit-enable-layout__item--full: true;
+$inuit-enable-layout__item--center: true;
+$inuit-enable-layout__item--bottom: true;
+$inuit-enable-margins: true;
+$inuit-enable-margins--none: true;
+$inuit-enable-paddings--none: true;
+$inuit-enable-paddings: true;
+$inuit-enable-paddings--tiny: true;
+$inuit-enable-paddings--small: true;
+$inuit-enable-paddings--large: true;
+$inuit-enable-paddings--huge: true;
+$inuit-enable-toggle--small: true;
+$inuit-enable-toggle--large: true;
+$inuit-enable-toggle--huge: true;
+$inuit-enable-btn--bare: true;
+$inuit-enable-btn--primary: true;
+$inuit-enable-btn--small: true;
+// Settings
+@import "px-defaults-design/_settings.defaults.scss";
+@import "px-colors-design/_settings.colors.scss";
+@import "inuit-responsive-settings/_settings.responsive.scss";
+// Tools
+@import "px-functions-design/_tools.functions.scss";
+@import "px-mixins-design/_tools.mixins.scss";
+@import "inuit-responsive-tools/_tools.responsive.scss";
+// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+// Base
+@import "px-flexbox-design/_base.flexbox.scss";
+@import "px-viewport-design/_base.viewport.scss";
+@import "px-typography-design/_base.typography.scss";
+// Meta
+@import "px-meta-lists-design/_meta.lists.scss";
+$inuit-enable-btn--bare--primary: true;
+$inuit-enable-btn--tertiary: true;
+// Objects
+@import "px-buttons-design/_objects.buttons.scss";
+@import "px-layout-design/_objects.layout.scss";
+$inuit-enable-table--rows: true;
+@import 'px-tables-design/_base.tables.scss';
+$inuit-enable-list-ui--large: true;
+@import "px-list-ui-design/_objects.list-ui.scss";
+// Trumps
+$inuit-enable-margins--tiny: true;
+$inuit-enable-margins--small: true;
+$inuit-enable-margins--large: true;
+$inuit-enable-margins--huge: true;
+$inuit-enable-margins--none: true;
+$inuit-enable-margins--rtl: true;
+$inuit-enable-margins--negative-tiny: true;
+$inuit-enable-paddings: true;
+$inuit-enable-paddings--tiny: true;
+$inuit-enable-paddings--small: true;
+$inuit-enable-paddings--large: true;
+$inuit-enable-paddings--huge: true;
+$inuit-enable-paddings--none: true;
+@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "px-spacing-design/_trumps.spacing.scss";
+@import 'px-tables-design/_base.tables.scss';
+@import "px-toggle-design/_objects.toggle.scss";
+$inuit-enable-input--tiny: true;
+@import 'px-forms-design/_base.forms.scss';
+// Trumps
+$inuit-enable-margins--tiny: true;
+$inuit-enable-margins--small: true;
+$inuit-enable-margins--large: true;
+$inuit-enable-margins--huge: true;
+$inuit-enable-margins--none: true;
+$inuit-enable-margins--rtl: true;
+$inuit-enable-margins--negative-tiny: true;
+$inuit-enable-paddings: true;
+$inuit-enable-paddings--tiny: true;
+$inuit-enable-paddings--small: true;
+$inuit-enable-paddings--large: true;
+$inuit-enable-paddings--huge: true;
+$inuit-enable-paddings--none: true;
+@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "px-spacing-design/_trumps.spacing.scss";
+@import 'px-tables-design/_base.tables.scss';
+@import "px-toggle-design/_objects.toggle.scss";
+@import 'px-list-inline-design/_objects.list-inline.scss';
+@import 'px-forms-design/_base.forms.scss';
+
+body{
+	background-color: #DFDFDF;
+}
+ul{
+	padding-left: 0;
+}
+.header {
+	background-color: #D94000;	
+}
+.row.tabs{
+	background-color: #fff;
+}
+.row.tabs ul{
+	margin-bottom: 0;
+}
+.tabs ul li {
+	padding: 10px 27px;
+}
+.row.tabs .list-inline{
+	margin-left: 0;
+}
+.row.tabs ul li.active{
+	border-bottom: 1px solid #D94000;
+}
+.row.tabs ul li a{
+	color: #cecece;
+	text-decoration: none;
+}
+.row.tabs ul li.active a{
+	color: #D94000;
+}
+.subHeader {
+	background-color: #71A4E3;
+	border-radius: 10px;
+	background: linear-gradient(#71A4E3,#A4CDF9);	
+	padding: 10px 5px 0px;
+}
+.subHeader ul li {
+	color: white;
+}
+.outstandAmount{
+	background-color: blue;
+    border-radius: 10px;
+}
+.outstandAmount ul li{
+	color: white;
+}
+.outstandAmount ul{
+	list-style: none;
+	padding: 0px;
+}
+.exploreMore{
+	background-color: white;
+    border-radius: 10px;
+    padding: 0;
+}
+.exploreMore ul li{
+	color: black;
+}
+.exploreMore ul{
+	list-style: none;
+	padding: 5px 15px 0px;
+}
+.payNowBtn {
+	margin-bottom: 10px;
+}
+.usageSummary {
+	background-color: white;
+	border-radius: 10px;
+	margin-left: 25px; 
+}
+.usageSummary .row:nth-child(1){
+	    padding: 5px 10px 15px;
+}
+.mt15{	
+    margin-top: 15px;
+}
+.borderBtm{
+	border-bottom: 1px solid #DFDFDF;
+}
+.userImg{
+	width: 50px ;
+	height: 60px;
+	padding: 10px;
+}
+.total{
+	color:#D94000;
+}
+.consumptions{
+	background-color: orange;
+	padding: 5px 15px;
+}
+.consumptions span{
+	color: #fff;
+}
+.exploreText{
+	padding: 5px 15px 15px;
+}
+.exploreText p{
+	color: #D94000;
+}
+.macotImg{
+	height: 80px;
+    margin-right: -25px
+}
+.lastmonthUnits{
+	color: green;
+    font-size: 18px;
+    width: 40%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+.lastmonthUnits sup,
+.forecastUnits sup,
+.presentUnits sup{
+	color: #ddd;
+	margin-left: 3px;
+}
+.lastmonthPrice{
+	font-size: 18px;
+	margin: 5px auto;
+	text-align: left;
+    padding-left: 34%;
+}
+.defaultChart{
+	position: relative;
+}
+.present{
+	position: absolute;
+    top: 30%;
+    left: 40%;
+}
+.forecastUnits{
+	color: red;
+    font-size: 18px;
+    width: 40%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+.forecastPrice{
+	font-size: 18px;
+	margin: 5px auto; 
+	text-align: left;
+    padding-left: 34%;
+}
+.presentUnits{
+	font-size: 30px;
+	color: red;
+}
+.percentCircle{	
+    height: 65%;
+    width: 65%;
+    margin: 0 auto;
+}
+.gas{
+	border-bottom: 1px solid red;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.mb15{
+	margin-bottom: 15px;
+}
+.forecastPrice{
+	font-size: 18px;
+}
+.forecastHour{
+	font-size: 16px;
+}
+.presentUnits sup{
+	font-size: 14px;
+    color: #555;
+    top: -1.5em;
+    margin-left: 3px;
+}
