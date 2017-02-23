@@ -1,65 +1,65 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<script type="text/javascript" src="../../bower_components/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../../bower_components/highcharts/highcharts-more.js"></script>
+<script type="text/javascript" src="../../bower_components/highcharts/modules/solid-gauge.js"></script>
 <link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
 <link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
 <link rel="import" href="../../bower_components/px-percent-circle/px-percent-circle.html">
 <link rel="import" href="../../bower_components/px-gauge/px-gauge.html">
 <link rel="import" href="./styles/blankpage-view-styles.html">
+<link rel="import" href="../../bower_components/Px-Progress-Bar/Px-Progress-Bar.html" />
+<!--<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">-->
 <dom-module id="blankpage-view">
   <template>
     <style include="blankpage-view-styles">
+       :host {
+        --px-progress-bar-fill-color: #ffa500;
+      }
+      
+      .live-data-header {
+        height: 50px;
+        border-bottom: 1px solid #DFDFDF;
+        padding: 0 15px;
+      }
+      
+      .action-icon {
+        background: url(http://localhost:5000/elements/views/images/edit.png);
+        width: 13px;
+        height: 13px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        position: absolute;
+        right: 15px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        cursor: pointer;
+      }
+      
+      .tip-container {
+        background: url(http://localhost:5000/elements/views/images/tips_bg.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 160px;
+        background-color: white;
+        border-radius: 10px;
+        color: #9ad338;
+      }
+      
+      .tip-title {
+        font-size: 1.1rem;
+      }
+      
+      .usage-title {
+        font-size: 1.2rem;
+      }
 
     </style>
-    <!--<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>EDF ENERGY</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <!--</head>-->
-    <!--<link rel="stylesheet" type="text/css" href="style.css">    
-    <link rel="stylesheet" href="circle.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <!--<div class="container header">
-      <div class="rows">
-        <div class="col-sm-6">
-          <img src="images/logo.png">
-        </div>
-        <div class="col-sm-6 text-right">
-          <div class="col-sm-6 text-right">
-            <img src="user.jpeg" class="img-circle userImg">
-          </div>
-          <div>
-            <p style="padding-right: 165px;margin-top: 10px;">Welcome Joseph</p>
-            <p style="padding-right: 120px;margin-top: -10px;">A/c no: 34 102 201 1125 </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row tabs">
-        <ul class="list-inline">
-          <li class="active"><a href="#">DASHBOARD</a>
-          </li>
-          <li><a href="#/dashboards">MY USAGE</a>
-          </li>
-          <li><a href="#">MY TARIFF PLAN</a>
-          </li>
-          <li><a href="#">BILLS&PAYMENT</a>
-          </li>
-          <li><a href="#">ENERGY SAVING TIPS</a>
-          </li>
-          <li><a href="#">SELF SERVICES</a>
-          </li>
-          <li><a href="#">HELP AND SUPPORT</a>
-          </li>
-        </ul>
-      </div>
-    </div>-->
     <div class="container mt15">
       <div class="row subHeader">
         <div class="col-xs-6">
@@ -77,155 +77,155 @@
             <li style="padding-right: 30px;margin-top: -5px;">Heavy Cloud Cover</li>
           </ul>
         </div>
-        <div class="col-sm-2 text-right">
+        <div class="col-xs-2 text-right">
           <img class="macotImg" src="images/macot_banner.png">
         </div>
       </div>
       <div class="row">
-      <div class="col-xs-2 mt15 mb15">
-        <div class="row outstandAmount">
-          <div class="col-xs-12">
-            <ul>
-              <li>
-                <h4>£ 259 </h4>
-              </li>
-              <li>
-                <h5>Outstanding Amount</h5>
-              </li>
-              <li>
-                <h6>date as on 22-Feb-2017</h6>
-              </li>
-              <li>
-                <h6>13 days remaining</h6>
-              </li>
-            </ul>
-            <div class="progress">
-              <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0"
-                aria-valuemax="100" style="width:40%">
-              </div>
-            </div>
-            <button type="button" class="btn btn-danger payNowBtn">Pay Now</button>
-          </div>
-        </div>
-        <div class="row mt15">
-          <div class="col-xs-12 exploreMore">
-            <ul>
-              <li>
-                <h4>Did You Know ?</h4>
-              </li>
-              <li>
-                Usefull Info based on your last month
-              </li>
-            </ul>
-            <div class="consumptions">
-              <span>Average Consumption</span>
-              <span>Peak Consumption</span>
-              <span>Top Consuming Rooms</span>
-            </div>
-            <div class="exploreText">
-              <p>Explore More</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-10 mt15">
-      <div class="row ml15 usageSummary1">
-        <div class="col-xs-12">
-          <div class="row mt15 borderBtm">
-            <div class="col-xs-6"><img src="images/usage_summary_icon.png"> Usage Summary</div>
-            <div class="col-xs-6 text-right total">Total <img src="images/drop_down_arrow_red.png"></div>
-          </div>
-          <div class="row mt15 mb15">
-            <div class="col-xs-10" style="border-right:1px solid red;">
-              <div class="col-xs-4 text-center" style="margin-top:9%;">
-                <div class="lastmonth">
-                  <div class="lastmonthUnits">198<sup>kWh</sup></div>
-                  <div class="lastmonthPrice"><span>£</span>178</div>
-                  <div class="lastmonthHour">Last Month</div>
+        <div class="col-xs-2 mt15 mb15">
+          <div class="row outstandAmount">
+            <div class="col-xs-12">
+              <ul>
+                <li>
+                  <h4>£ 259 </h4>
+                </li>
+                <li>
+                  <h5>Outstanding Amount</h5>
+                </li>
+                <li>
+                  <h6>date as on 22-Feb-2017</h6>
+                </li>
+                <li>
+                  <h6>13 days remaining</h6>
+                </li>
+              </ul>
+              <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+                  aria-valuemax="100" style="width:40%">
                 </div>
               </div>
-              <div class="col-xs-4">
-               <!-- <div class="defaultChart">
-                <img src="images/default_chart.png">-->
-                  <px-percent-circle class="percentCircle" val="80" max="100" thickness="10"></px-percent-circle>
-                 <div class="present1">
-                 <!--<div class="presentUnits">80<sup>kWh</sup></div>-->
-                  <div class="presentPrice"><span>£</span>0.9</div>
-                   <div class="presentMonthHour">presentMonthtodate</div>
+              <button type="button" class="btn btn-danger payNowBtn">Pay Now</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 exploreMore mt15">
+              <ul>
+                <li>
+                  <h4>Did You Know ?</h4>
+                </li>
+                <li>
+                  Usefull Info based on your last month
+                </li>
+              </ul>
+              <div class="consumptions">
+                <span>Average Consumption</span>
+                <span>Peak Consumption</span>
+                <span>Top Consuming Rooms</span>
+              </div>
+              <div class="exploreText">
+                <p>Explore More</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-10 mt15">
+          <div class="row usageSummary">
+            <div class="col-xs-12">
+              <div class="row mt15 borderBtm">
+                <div class="col-xs-6"><img src="images/usage_summary_icon.png"> Usage Summary</div>
+                <div class="col-xs-6 text-right total">Total <img src="images/drop_down_arrow_red.png"></div>
+              </div>
+              <div class="row mt15 mb15" style="position: relative">
+                <div style="position: absolute; right: 10px; top: -15px; cursor: pointer;">
+                  <i class="fa fa-exchange" aria-hidden="true" on-tap="_switchMode"></i>
+                </div>
+                <div class="col-xs-10">
+                  <div class="col-xs-4 text-center" style="margin-top:9%;">
+                    <div class="lastmonth">
+                      <div class="lastmonthUnits"><span>{{lastMonth.energy}}</span><sup>kWh</sup></div>
+                      <div class="lastmonthPrice"><i class="fa fa-gbp" aria-hidden="true"></i>{{lastMonth.energy}}</div>
+                      <div class="lastmonthHour usage-title">Last Month</div>
                     </div>
-              </div>
-              <div class="col-xs-4 text-center" style="margin-top:9%;">
-                <div class="forecast">
-                  <div class="forecastUnits">200<sup>kWh</sup></div>
-                  <div class="forecastPrice"><span>£</span>180</div>
-                  <div class="forecastHour">Forecast for Feb</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-2 text-center">
-              <span>£/KW</span>
-              <input id="switch%" type="checkbox" class="toggle__input toggle__input--small">
-              <label for="switch%" class="toggle__label toggle__label--small"></label>
-                <div class="gas">
-                <px-percent-circle class="percentCircle" val="65" max="100" thickness="10"></px-percent-circle>
-                  <span>Gas</span>
-                  <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-                <div class="electricity">
-                  <px-percent-circle class="percentCircle" val="35" max="100" thickness="10"></px-percent-circle>
-                  <span>Electricity</span>
-                  <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-            </div>
-          </div>
-          </div>
-        </div>
-        <div class="row ml15 mt15 mb15">
-          <div class="col-xs-8 usageSummary1">
-            <div class="row">
-              <div class="col-xs-6">Energy Now</div>
-              <div class="col-xs-6 text-right">£/KW</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4">
-                <px-gauge value="6.5" max="100" unit="kW" error='[[0,12],[79,100]]' abnormal='[[12,32],[68,79]]' anomaly='[[32,45],[54,68]]' normal='[[45,54]]'></px-gauge>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-4">
-            <div class="row ml15">
-              <div class="col-xs-12 usageSummary1">
-                <div class="row mt15">
-                  <div class="col-xs-9"><img src="images/budget_icon.png"> Monthly Budget</div>
-                  <div class="col-xs-3 text-right"><img src="images/edit.png"></div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <div class="progress">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>
+                  </div>
+                  <div class="col-xs-4" style="position: relative;">
+                    <!-- <div class="defaultChart">
+              <img src="images/default_chart.png">-->
+                    <div id="gaugeChart" class="">
+                    </div>
+                    <div style="text-align: center;">
+                      <!--<div class="presentUnits">80<sup>kWh</sup></div>-->
+                      <!--<div class="lastmonthPrice "><i class="fa fa-gbp" aria-hidden="true"></i>0.9</div>-->
+                      <div class="usage-title">So far this month</div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4 text-center" style="margin-top:9%;">
+                    <div class="forecast">
+                      <div class="forecastUnits">200<sup>kWh</sup></div>
+                      <div class="forecastPrice"><i class="fa fa-gbp" aria-hidden="true"></i>180</div>
+                      <div class="forecastHour usage-title">Forecast for <span style="color: #ffa500">Feb</span></div>
                     </div>
                   </div>
                 </div>
-                <div class="row mb15">
-                  <div class="col-xs-8">£ 100 Spent</div>
-                  <div class="col-xs-4 text-right">£ 500</div>
+                <div class="col-xs-2 text-center" style="border-left: 1px solid #DFDFDF">
+                  <!--<span>£/KW<span>-->
+                  <!--<input id="switch%" type="checkbox" class="toggle__input toggle__input--small">
+          <label for="switch%" class="toggle__label toggle__label--small"></label>-->
+                  <div class="gas">
+                    <px-percent-circle class="percentCircle" val="{{monthlyPercent.gas}}" max="100" thickness="10"></px-percent-circle>
+                    <span>Gas | {{mode}}</span>
+                  </div>
+                  <div class="electricity">
+                    <px-percent-circle class="percentCircle" val="{{monthlyPercent.electricity}}" max="100" thickness="10"></px-percent-circle>
+                    <span>Electricity | {{mode}}</span>
+                  </div>
                 </div>
               </div>
-              <div class="col-xs-12 mt15 tipsbg">
-                <div class="energysaving">
-                  <h3>Energy Saving Tips</h3>   
-                  <ol>
-                      <li>Use energy saving light bulb</li>
-                      <li>Use "smart" power strips</li>
-                      <li>Turn off devices when not in use</li>
-                  </ol>
+            </div>
+          </div>
+          <div class="row usageSummary mt15 mb15" style="background-color: transparent;">
+            <div class="col-xs-8" style="padding-right: 15px; padding-left: 0;">
+              <div style="background-color: white; border-radius: 10px; height: 300px;">
+                <div class="live-data-header">
+                  <div style="float: left; line-height: 50px; font-size: 1.3rem;">
+                    Energy Now
+                  </div>
+                  <div style="float: right; line-height: 50px;">£/KW</div>
+                </div>
+                <div id="chart"></div>
+              </div>
+            </div>
+            <div class="col-xs-4" style="padding-right: 0;">
+              <div style="height: 125px; background-color: white; border-radius: 10px; margin-bottom: 15px;">
+                <div class="live-data-header" style="position: relative;">
+                  <div style="float: left; line-height: 50px; font-size: 1.3rem;">
+                    <span></span> Monthly Budget
+                  </div>
+                  <div class="action-icon"></div>
+                </div>
+                <div style="padding: 10px 15px 0;">
+                  <px-progress-bar value="20"></px-progress-bar>
+                </div>
+                <div style="position: relative">
+                  <div style="margin: 10px 15px;"><i class="fa fa-gbp" aria-hidden="true"></i> 100 spent</div>
+                  <div style="position: absolute; right: 15px; top: 0; bottom: 0; margin: auto;"><i class="fa fa-gbp" aria-hidden="true"></i> 500 spent</div>
+                </div>
+              </div>
+              <div class="tip-container">
+                <div class="row">
+                  <div class="col-xs-8 col-xs-offset-4">
+                    <div class="tip-title">Energy Saving Tips</div>
+                    <div class="">1. Use energy saving ligh bulb</div>
+                    <div class="">2. Use "smart" power strips</div>
+                    <div class="">3. Turn off devices when not in use</div>
+                    <div>
+                      <a class="btn btn-danger" style="background-color: #d9534f;">Know More</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-        
       </div>
     </div>
     <!--</html>-->
@@ -234,9 +234,261 @@
   <script>
     Polymer({
       is: 'blankpage-view',
-      properties: {},
+      properties: {
+        mode: {
+          type: String,
+          value: 'kWh'
+        },
+
+        monthlyPercent: {
+          type: Object,
+          value: {
+            gas: 40,
+            electricity: 60
+          }
+        },
+
+        lastMonth: {
+          type: Object,
+          value: {
+            energy: 198,
+            cost: 178
+          }
+        }
+      },
       ready: function () {
-        console.log('blankpage-view ready()')
+        setTimeout(function () {
+          var gaugeOptions = {
+
+            chart: {
+              type: 'solidgauge',
+              height: 200
+            },
+
+            title: null,
+
+            credits: {
+              enabled: false
+            },
+
+            pane: {
+              center: ['50%', '50%'],
+              size: '100%',
+              startAngle: 0,
+              endAngle: 360,
+              background: {
+                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                innerRadius: '90%',
+                outerRadius: '100%',
+                shape: 'arc'
+              }
+            },
+
+            tooltip: {
+              enabled: false
+            },
+
+            // the value axis
+            yAxis: {
+              stops: [
+                [0.100, '#55BF3B'], // green
+                // [0.5, '#DDDF0D'], // yellow
+                // [0.9, '#DF5353'] // red
+              ],
+              lineWidth: 0,
+              minorTickInterval: null,
+              tickAmount: 2,
+              // title: {
+              //   y: -70
+              // },
+              // labels: {
+              //   y: 16
+              // }
+            },
+
+            plotOptions: {
+              solidgauge: {
+                innerRadius: '90%',
+                dataLabels: {
+                  y: -20,
+                  borderWidth: 0,
+                  useHTML: true
+                }
+              }
+            }
+          };
+
+          var chartRpm = Highcharts.chart('gaugeChart', Highcharts.merge(gaugeOptions, {
+            yAxis: {
+              min: 0,
+              max: 100,
+              title: {
+                text: ''
+              },
+              labels: {
+                enabled: false
+              }
+            },
+
+            series: [{
+              name: 'RPM',
+              data: [70],
+              dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px;color:red">80 <sup>kWh</sup></span><br/>' +
+                  '<span style="font-size:20px;"><i class="fa fa-gbp" aria-hidden="true"></i> 0.9</span><br/>' +
+                  '<span style="font-size:12px;">per hour</span></div>'
+              },
+              tooltip: {
+                valueSuffix: ' revolutions/min'
+              }
+            }]
+
+          }));
+
+
+          var vuchart = new Highcharts.chart('chart', {
+
+              chart: {
+                type: 'gauge',
+                plotBorderWidth: 0,
+                plotBackgroundImage: null,
+                height: 200
+              },
+
+              title: {
+                text: 'Live data'
+              },
+
+              pane: [{
+                startAngle: -45,
+                endAngle: 45,
+                background: null,
+                center: ['25%', '145%'],
+                size: 300
+              }, {
+                startAngle: -45,
+                endAngle: 45,
+                background: null,
+                center: ['75%', '145%'],
+                size: 300
+              }],
+
+              tooltip: {
+                enabled: false
+              },
+
+              yAxis: [{
+                min: -20,
+                max: 6,
+                minorTickPosition: 'outside',
+                tickPosition: 'outside',
+                labels: {
+                  rotation: 'auto',
+                  distance: 20
+                },
+                plotBands: [{
+                  from: 0,
+                  to: 6,
+                  color: '#C02316',
+                  innerRadius: '100%',
+                  outerRadius: '105%'
+                }],
+                pane: 0,
+                title: {
+                  text: 'Electricity<br/><span style="font-size:8px">kW</span>',
+                  y: -40
+                }
+              }, {
+                min: -20,
+                max: 6,
+                minorTickPosition: 'outside',
+                tickPosition: 'outside',
+                labels: {
+                  rotation: 'auto',
+                  distance: 20
+                },
+                plotBands: [{
+                  from: 0,
+                  to: 6,
+                  color: '#C02316',
+                  innerRadius: '100%',
+                  outerRadius: '105%'
+                }],
+                pane: 1,
+                title: {
+                  text: 'Gas<br/><span style="font-size:8px">kW</span>',
+                  y: -40
+                }
+              }],
+
+              plotOptions: {
+                gauge: {
+                  dataLabels: {
+                    enabled: true
+                  },
+                  dial: {
+                    radius: '100%'
+                  },
+                },
+                series: {
+                  dataLabels: {
+                    crop: false
+                  }
+                }
+              },
+
+              credits: {
+                enabled: false
+              },
+
+
+              series: [{
+                name: 'Channel A',
+                data: [-20],
+                yAxis: 0,
+
+              }, {
+                name: 'Channel B',
+                data: [-20],
+                yAxis: 1
+              }]
+
+            },
+
+            // Let the music play
+            function (chart) {
+              setInterval(function () {
+                if (chart.series) { // the chart may be destroyed
+                  var left = chart.series[0].points[0],
+                    right = chart.series[1].points[0],
+                    leftVal,
+                    rightVal,
+                    inc = (Math.random() - 0.5) * 3;
+
+                  leftVal = left.y + inc;
+                  rightVal = leftVal + inc / 3;
+                  if (leftVal < -20 || leftVal > 6) {
+                    leftVal = left.y - inc;
+                  }
+                  if (rightVal < -20 || rightVal > 6) {
+                    rightVal = leftVal;
+                  }
+
+                  left.update(leftVal, false);
+                  right.update(rightVal, false);
+                  chart.redraw();
+                }
+              }, 500);
+
+            });
+        }.bind(this), 1000);
+      },
+      _switchMode: function(){
+        if (this.mode === 'kWh') {
+          this.set('mode', '£');
+        } else {
+          this.set('mode', 'kWh');
+        }
       }
     });
 

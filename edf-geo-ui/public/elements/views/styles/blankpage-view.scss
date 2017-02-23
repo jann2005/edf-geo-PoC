@@ -42,10 +42,10 @@ $inuit-enable-btn--small: true;
 @import "px-typography-design/_base.typography.scss";
 // Meta
 @import "px-meta-lists-design/_meta.lists.scss";
-$inuit-enable-btn--bare--primary: true;
-$inuit-enable-btn--tertiary: true;
+// $inuit-enable-btn--bare--primary: true;
+// $inuit-enable-btn--tertiary: true;
 // Objects
-@import "px-buttons-design/_objects.buttons.scss";
+// @import "px-buttons-design/_objects.buttons.scss";
 @import "px-layout-design/_objects.layout.scss";
 $inuit-enable-table--rows: true;
 @import 'px-tables-design/_base.tables.scss';
@@ -215,8 +215,6 @@ ul{
 .lastmonthPrice{
 	font-size: 18px;
 	margin: 5px auto;
-	text-align: left;
-    padding-left: 34%;
 }
 .defaultChart{
 	position: relative;
@@ -235,9 +233,7 @@ ul{
 }
 .forecastPrice{
 	font-size: 18px;
-	margin: 5px auto; 
-	text-align: left;
-    padding-left: 34%;
+	margin: 5px auto;
 }
 .presentUnits{
 	font-size: 30px;
@@ -249,7 +245,7 @@ ul{
     margin: 0 auto;
 }
 .gas{
-	border-bottom: 1px solid red;
+	border-bottom: 1px solid #DFDFDF;
     margin-bottom: 10px;
     padding-bottom: 5px;
 }
