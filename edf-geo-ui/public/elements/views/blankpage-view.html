@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
 <link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
 <link rel="import" href="../../bower_components/px-percent-circle/px-percent-circle.html">
+<link rel="import" href="../../bower_components/px-gauge/px-gauge.html">
 <link rel="import" href="./styles/blankpage-view-styles.html">
 <dom-module id="blankpage-view">
   <template>
@@ -19,9 +20,10 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <!--</head>-->
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="style.css">    
+    <link rel="stylesheet" href="circle.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="circle.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <!--<div class="container header">
       <div class="rows">
         <div class="col-sm-6">
@@ -125,7 +127,9 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-9 usageSummary mt15">
+      <div class="col-sm-9 mt15">
+      <div class="row usageSummary">
+        <div class="col-xs-12">
         <div class="row mt15 borderBtm">
           <div class="col-xs-6"><img src="images/usage_summary_icon.png"> Usage Summary</div>
           <div class="col-xs-6 text-right total">Total <img src="images/drop_down_arrow_red.png"></div>
@@ -140,14 +144,14 @@
               </div>
             </div>
             <div class="col-xs-4">
-              <div class="defaultChart">
-                <img src="images/default_chart.png">
-                <div class="present">
-                  <div class="presentUnits">80<sup>kWh</sup></div>
-                  <div class="presentPrice"><span>£</span>0.9</div>
-                  <div class="presentHour">per hour</div>
-                </div>
-              </div>
+             <!-- <div class="defaultChart">
+              <img src="images/default_chart.png">-->
+                <px-percent-circle class="percentCircle" val="80" max="100" thickness="10"></px-percent-circle>
+               <div class="present1">
+               <!--<div class="presentUnits">80<sup>kWh</sup></div>-->
+                <div class="presentPrice"><span>£</span>0.9</div>
+                 <div class="presentMonthHour">presentMonthtodate</div>
+                  </div>
             </div>
             <div class="col-xs-4 text-center" style="margin-top:9%;">
               <div class="forecast">
@@ -158,14 +162,29 @@
             </div>
           </div>
           <div class="col-xs-2 text-center">
+          <span>£/KW<span>
+          <input id="switch%" type="checkbox" class="toggle__input toggle__input--small">
+          <label for="switch%" class="toggle__label toggle__label--small"></label>
             <div class="gas">
-              <px-percent-circle class="percentCircle" val="65" max="100" thickness="10"></px-percent-circle>
+            <px-percent-circle class="percentCircle" val="65" max="100" thickness="10"></px-percent-circle>
               <span>Gas</span>
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
             </div>
             <div class="electricity">
               <px-percent-circle class="percentCircle" val="35" max="100" thickness="10"></px-percent-circle>
               <span>Electricity</span>
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
             </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="row usageSummary mt15">
+        <div class="col-xs-12 ">
+        <div class="row"><div class="col-xs-6">Energy Now</div> <div class="col-xs-6 text-right">£/KW</div></div>
+        <div class="col-xs-6">
+            <px-gauge value="1.7" max="100" unit="kW" error='[[0,12],[79,100]]' abnormal='[[12,32],[68,79]]' anomaly='[[32,45],[54,68]]' normal='[[45,54]]'></px-gauge></div>
           </div>
         </div>
       </div>
