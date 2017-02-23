@@ -38,7 +38,9 @@
     "px-vis-timeseries": "^0.6.2",
     "px-vis-xy-chart": "^0.3.0",
     "px-view-header": "^0.2.0",
-    "px-percent-circle": "^0.2.3"
+    "px-percent-circle": "^0.2.3",
+    "px-gauge": "^1.0.0",
+    "highcharts-chart": "^1.1.5"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

@@ -64,12 +64,11 @@ ul{
 .payNowBtn {
 	margin-bottom: 10px;
 }
-.usageSummary {
+.usageSummary1 {
 	background-color: white;
 	border-radius: 10px;
-	margin-left: 25px; 
 }
-.usageSummary .row:nth-child(1){
+.usageSummary1 .row:nth-child(1){
 	    padding: 5px 10px 15px;
 }
 .mt15{	
@@ -111,8 +110,7 @@ ul{
     border-bottom: 1px solid #ddd;
 }
 .lastmonthUnits sup,
-.forecastUnits sup,
-.presentUnits sup{
+.forecastUnits sup{
 	color: #ddd;
 	margin-left: 3px;
 }
@@ -125,10 +123,9 @@ ul{
 .defaultChart{
 	position: relative;
 }
-.present{
-	position: absolute;
-    top: 30%;
-    left: 40%;
+.present1{
+	padding: 5px;
+	margin-left: 80px;
 }
 .forecastUnits{
 	color: red;
@@ -152,6 +149,9 @@ ul{
     width: 65%;
     margin: 0 auto;
 }
+.presentMonthHour{
+	margin-left: -45px;
+}
 .gas{
 	border-bottom: 1px solid red;
     margin-bottom: 10px;
@@ -159,6 +159,9 @@ ul{
 }
 .mb15{
 	margin-bottom: 15px;
+}
+.ml15{
+	margin-left: 15px;
 }
 .forecastPrice{
 	font-size: 18px;
@@ -171,4 +174,15 @@ ul{
     color: #555;
     top: -1.5em;
     margin-left: 3px;
+}
+.tipsbg{
+	background-image: url('images/tips_bg.png');
+	height: 160px;
+    background-repeat: no-repeat;
+}
+.energysaving{
+	margin-left: 60px;
+}
+.energysaving ol{
+	margin-left: 0px !important;
 }
