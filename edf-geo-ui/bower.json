@@ -41,7 +41,9 @@
     "px-percent-circle": "^0.2.3",
     "px-gauge": "^1.0.0",
     "highcharts-chart": "^1.1.5",
-    "px-progress-bar": "^0.2.3"
+    "px-progress-bar": "^0.2.3",
+    "moment": "^2.17.1",
+    "stomp-client": "https://github.com/lumue/polymer-stomp-client.git#master"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

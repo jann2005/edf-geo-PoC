@@ -65,7 +65,7 @@ if (uaaIsConfigured) {
 var proxies = {
   proxy: {
     forward: {
-      
+      '/predix-api/ws(.*)': 'https://predix-edf-messaging-subscriber-geo-live.run.aws-usw02-pr.ice.predix.io$1'
     },
     headers: {
       'Authorization': function (req) {

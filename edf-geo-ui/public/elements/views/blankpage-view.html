@@ -9,6 +9,7 @@
 <link rel="import" href="./styles/blankpage-view-styles.html">
 <link rel="import" href="../../bower_components/Px-Progress-Bar/Px-Progress-Bar.html" />
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/stomp-client/stomp-client.html">
 <!--<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">-->
 <dom-module id="blankpage-view">
   <template>
@@ -59,6 +60,12 @@
       }
 
     </style>
+            <stomp-client
+                id="websocket"
+                url="/predix-api/ws/stomp"
+                on-message="_wsMessageReceived">
+        </stomp-client>
+
     <iron-ajax id="getlastMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
       body="{{_paramGenerator('lastMonth')}}" loading="{{loading2d}}" handle-as="json" on-response="_handleLastMonthData"></iron-ajax>
     <iron-ajax id="getThisMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
@@ -284,6 +291,9 @@
       },
       ready: function () {
         setTimeout(function () {
+
+          this._connectToWebSocket();
+
           var vuchart = new Highcharts.chart('chart', {
 
               chart: {
@@ -678,7 +688,16 @@
           }]
 
         }));
-      }
+      },
+
+      _connectToWebSocket: function(){
+                this.$.websocket.close();
+                this.$.websocket.topic = `/topic/f58c8259-f767-47a9-9122-4278b3087ed7`;
+                this.$.websocket.connect();
+            },
+            _wsMessageReceived: function(e){
+              console.log(e.detail);
+            }
     });
 
   </script>
