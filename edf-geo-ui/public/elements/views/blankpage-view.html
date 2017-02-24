@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script type="text/javascript" src="../../bower_components/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../../bower_components/moment/moment.js"></script>
 <script type="text/javascript" src="../../bower_components/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="../../bower_components/highcharts/modules/solid-gauge.js"></script>
 <link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
@@ -58,18 +59,37 @@
       .usage-title {
         font-size: 1.2rem;
       }
+      
+      .back-drop>a,
+      .back-drop>div {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: 30px;
+        width: 100px;
+      }
+      
+      .back-drop {
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+        top: 0;
+        width: 100%;
+        background-color: white;
+      }
 
     </style>
-            <stomp-client
-                id="websocket"
-                url="/predix-api/ws/stomp"
-                on-message="_wsMessageReceived">
-        </stomp-client>
-
+    <stomp-client id="websocket" url="/predix-api/ws/stomp" on-message="_wsMessageReceived">
+    </stomp-client>
     <iron-ajax id="getlastMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
       body="{{_paramGenerator('lastMonth')}}" loading="{{loading2d}}" handle-as="json" on-response="_handleLastMonthData"></iron-ajax>
     <iron-ajax id="getThisMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
       body="{{_paramGenerator('thisMonth')}}" loading="{{loading2d}}" handle-as="json" on-response="_handleThisMonthData"></iron-ajax>
+    <iron-ajax id="connectRequest" url="/api/datahandler/live/7d1a5b48-1da8-4a6b-92ed-7f4569f0361a" content-type="application/json"
+      loading="{{loading2d}}" handle-as="json"></iron-ajax>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <div class="container mt15">
@@ -78,7 +98,7 @@
           <ul style="list-style: none;">
             <li><img src="images/location_icon.png"> 80 Victoria Street,</li>
             <li style="padding-left: 18px;">London</li>
-            <li style="padding-left: 18px;">Thursday, February 09.2017 12.35PM</li>
+            <li style="padding-left: 18px;">{{_getToday()}}</li>
           </ul>
         </div>
         <div class="col-xs-4 text-right">
@@ -202,7 +222,26 @@
                     Energy Now
                   </div>
                 </div>
-                <div id="chart"></div>
+                <div style="position: relative;">
+                  <div id="vuchart"></div>
+                  <div class="row">
+                    <div class="col-xs-6 text-center">{{current.electricity}} w</div>
+                    <div class="col-xs-6 text-center">{{current.gas}} w</div>
+                  </div>
+                  <template is="dom-if" if="{{!connected}}">
+                    <div class="back-drop">
+                    <template is="dom-if" if="{{!connecting}}">
+                      <a class="btn btn-default" on-tap="_goLive">GO LIVE!</a>
+                    </template>
+                    <template is="dom-if" if="{{connecting}}">
+                      <div>
+                        <i style="font-size: 1em;" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                        <span style="position: relative;" class="sr-only">Connecting...</span>
+                      </div>
+                    </template>
+                  </div>
+                  </template>
+                </div>
               </div>
             </div>
             <div class="col-xs-4" style="padding-right: 0;">
@@ -246,6 +285,24 @@
     Polymer({
       is: 'blankpage-view',
       properties: {
+        vuchart: {
+          type: Object
+        },
+        connecting: {
+          type: Boolean,
+          value: false
+        },
+        connected: {
+          type: Boolean,
+          value: false
+        },  
+        current: {
+          type: Object,
+          value: {
+            electricity: 0,
+            gas: 0
+          }
+        },
         mode: {
           type: String,
           value: 'kWh'
@@ -292,143 +349,116 @@
       ready: function () {
         setTimeout(function () {
 
-          this._connectToWebSocket();
+          // this._connectToWebSocket();
 
-          var vuchart = new Highcharts.chart('chart', {
+          this.vuchart = new Highcharts.chart('vuchart', {
 
-              chart: {
-                type: 'gauge',
-                plotBorderWidth: 0,
-                plotBackgroundImage: null,
-                height: 200
-              },
-
-              title: {
-                text: 'Live data'
-              },
-
-              pane: [{
-                startAngle: -45,
-                endAngle: 45,
-                background: null,
-                center: ['25%', '145%'],
-                size: 300
-              }, {
-                startAngle: -45,
-                endAngle: 45,
-                background: null,
-                center: ['75%', '145%'],
-                size: 300
-              }],
-
-              tooltip: {
-                enabled: false
-              },
-
-              yAxis: [{
-                min: -20,
-                max: 6,
-                minorTickPosition: 'outside',
-                tickPosition: 'outside',
-                labels: {
-                  rotation: 'auto',
-                  distance: 20
-                },
-                plotBands: [{
-                  from: 0,
-                  to: 6,
-                  color: '#C02316',
-                  innerRadius: '100%',
-                  outerRadius: '105%'
-                }],
-                pane: 0,
-                title: {
-                  text: 'Electricity<br/><span style="font-size:8px">kW</span>',
-                  y: -40
-                }
-              }, {
-                min: -20,
-                max: 6,
-                minorTickPosition: 'outside',
-                tickPosition: 'outside',
-                labels: {
-                  rotation: 'auto',
-                  distance: 20
-                },
-                plotBands: [{
-                  from: 0,
-                  to: 6,
-                  color: '#C02316',
-                  innerRadius: '100%',
-                  outerRadius: '105%'
-                }],
-                pane: 1,
-                title: {
-                  text: 'Gas<br/><span style="font-size:8px">kW</span>',
-                  y: -40
-                }
-              }],
-
-              plotOptions: {
-                gauge: {
-                  dataLabels: {
-                    enabled: true
-                  },
-                  dial: {
-                    radius: '100%'
-                  },
-                },
-                series: {
-                  dataLabels: {
-                    crop: false
-                  }
-                }
-              },
-
-              credits: {
-                enabled: false
-              },
-
-
-              series: [{
-                name: 'Channel A',
-                data: [-20],
-                yAxis: 0,
-
-              }, {
-                name: 'Channel B',
-                data: [-20],
-                yAxis: 1
-              }]
-
+            chart: {
+              type: 'gauge',
+              plotBorderWidth: 0,
+              plotBackgroundImage: null,
+              height: 200
             },
 
-            // Let the music play
-            function (chart) {
-              setInterval(function () {
-                if (chart.series) { // the chart may be destroyed
-                  var left = chart.series[0].points[0],
-                    right = chart.series[1].points[0],
-                    leftVal,
-                    rightVal,
-                    inc = (Math.random() - 0.5) * 3;
+            title: {
+              text: 'Live data'
+            },
 
-                  leftVal = left.y + inc;
-                  rightVal = leftVal + inc / 3;
-                  if (leftVal < -20 || leftVal > 6) {
-                    leftVal = left.y - inc;
-                  }
-                  if (rightVal < -20 || rightVal > 6) {
-                    rightVal = leftVal;
-                  }
+            pane: [{
+              startAngle: -45,
+              endAngle: 45,
+              background: null,
+              center: ['25%', '145%'],
+              size: 300
+            }, {
+              startAngle: -45,
+              endAngle: 45,
+              background: null,
+              center: ['75%', '145%'],
+              size: 300
+            }],
 
-                  left.update(leftVal, false);
-                  right.update(rightVal, false);
-                  chart.redraw();
+            tooltip: {
+              enabled: false
+            },
+
+            yAxis: [{
+              min: 0,
+              max: 20000,
+              minorTickPosition: 'outside',
+              tickPosition: 'outside',
+              labels: {
+                rotation: 'auto',
+                distance: 20
+              },
+              plotBands: [{
+                from: 15000,
+                to: 20000,
+                color: '#C02316',
+                innerRadius: '100%',
+                outerRadius: '105%'
+              }],
+              pane: 0,
+              title: {
+                text: 'Electricity<br/><span style="font-size:8px">W</span>',
+                y: -40
+              }
+            }, {
+              min: 0,
+              max: 20000,
+              minorTickPosition: 'outside',
+              tickPosition: 'outside',
+              labels: {
+                rotation: 'auto',
+                distance: 20
+              },
+              plotBands: [{
+                from: 15000,
+                to: 20000,
+                color: '#C02316',
+                innerRadius: '100%',
+                outerRadius: '105%'
+              }],
+              pane: 1,
+              title: {
+                text: 'Gas<br/><span style="font-size:8px">W</span>',
+                y: -40
+              }
+            }],
+
+            plotOptions: {
+              gauge: {
+                dataLabels: {
+                  enabled: true
+                },
+                dial: {
+                  radius: '100%'
+                },
+              },
+              series: {
+                dataLabels: {
+                  crop: false
                 }
-              }, 500);
+              }
+            },
 
-            });
+            credits: {
+              enabled: false
+            },
+
+
+            series: [{
+              name: 'Channel A',
+              data: [-20],
+              yAxis: 0,
+
+            }, {
+              name: 'Channel B',
+              data: [-20],
+              yAxis: 1
+            }]
+
+          });
         }.bind(this), 1000);
       },
       _switchMode: function () {
@@ -596,7 +626,6 @@
           1000));
         this._renderCircleChart();
         this._switchMode();
-        console.log(this.thisMonth);
       },
 
       _renderCircleChart: function () {
@@ -678,8 +707,10 @@
             name: 'RPM',
             data: [datePercent],
             dataLabels: {
-              format: '<div style="text-align:center"><span style="font-size:25px;color:red">' + this.thisMonth.energy.total + ' <sup>kWh</sup></span><br/>' +
-                '<span style="font-size:20px;"><i class="fa fa-gbp" aria-hidden="true"></i> ' + this.thisMonth.cost.total + '</span><br/>' +
+              format: '<div style="text-align:center"><span style="font-size:25px;color:red">' + this.thisMonth
+                .energy.total + ' <sup>kWh</sup></span><br/>' +
+                '<span style="font-size:20px;"><i class="fa fa-gbp" aria-hidden="true"></i> ' + this.thisMonth
+                .cost.total + '</span><br/>' +
                 '</div>'
             },
             tooltip: {
@@ -690,14 +721,42 @@
         }));
       },
 
-      _connectToWebSocket: function(){
-                this.$.websocket.close();
-                this.$.websocket.topic = `/topic/f58c8259-f767-47a9-9122-4278b3087ed7`;
-                this.$.websocket.connect();
-            },
-            _wsMessageReceived: function(e){
-              console.log(e.detail);
-            }
+      _connectToWebSocket: function () {
+        this.$.websocket.close();
+        this.$.websocket.topic = `/topic/7d1a5b48-1da8-4a6b-92ed-7f4569f0361a`;
+        this.$.websocket.connect();
+      },
+      _wsMessageReceived: function (e) {
+        var chart = this.vuchart;
+        if (chart.series) { // the chart may be destroyed
+          var left = chart.series[0].points[0],
+            right = chart.series[1].points[0],
+            leftVal,
+            rightVal,
+            inc = (Math.random() - 0.5) * 3;
+
+          leftVal = e.detail.electricValue;
+          rightVal = e.detail.gasValue;
+
+          left.update(leftVal, false);
+          right.update(rightVal, false);
+          chart.redraw();
+          this.set('current.gas', e.detail.gasValue);
+          this.set('current.electricity', e.detail.electricValue);
+          if (!this.connected) this.set('connected', true);
+        }
+      },
+
+      _goLive: function (e) {
+        if (this.connecting) return;
+        this.set('connecting', true);
+        this.$.connectRequest.generateRequest();
+        this._connectToWebSocket();
+      },
+
+      _getToday: function () {
+        return moment().format('LLLL');
+      }
     });
 
   </script>

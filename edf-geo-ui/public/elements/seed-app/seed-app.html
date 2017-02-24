@@ -66,13 +66,15 @@
         height: 60px;
         padding: 10px;
       }
+      
       main {
         background: url('../views/images/2.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
       }
-      .callEmail{
+      
+      .callEmail {
         position: absolute;
         top: 50%;
         right: 0;
@@ -105,12 +107,14 @@
                 <img src="../views/images/logo.png">
               </div>
               <div class="col-sm-6 text-right">
-                <div class="col-sm-6 text-right">
-                  <img src="../views/user.jpeg" class="img-circle userImg">
-                </div>
-                <div>
-                  <p style="padding-right: 165px;margin-top: 10px;">Welcome Joseph</p>
-                  <p style="padding-right: 120px;margin-top: -10px;">A/c no: 34 102 201 1125 </p>
+                <div class="row">
+                  <div class="col-sm-6 text-right" style="padding-right: 0;">
+                    <img style="width: 60px; margin-left: 0;" src="../views/user.jpeg" class="img-circle userImg">
+                  </div>
+                  <div class="col-sm-6 text-left" style="padding-left: 0; color: white">
+                    <h5 style="margin-bottom: 0">Welcome Joseph</h5>
+                    <h5 style="margin-bottom: 0; margin-top: 5px;">A/c no: 34 102 201 1125 </h5>
+                  </div>
                 </div>
               </div>
             </div>
@@ -118,9 +122,9 @@
           <div class="container" style="width: 100%">
             <div class="row tabs" style="padding: 0 50px;">
               <ul class="list-inline">
-                <li class="active"><a href="#/blankpage">DASHBOARD</a>
+                <li class="active"><a href="#/dashboards">DASHBOARD</a>
                 </li>
-                <li><a href="#/dashboards">MY USAGE</a>
+                <li><a href="#/myusage">MY USAGE</a>
                 </li>
                 <li><a href="#">MY TARIFF PLAN</a>
                 </li>
@@ -134,12 +138,16 @@
                 </li>
               </ul>
             </div>
-          </div> 
-          <div class="callEmail">
-                  <div ><img src="../views/images/call_default.png"><p>Call</p></div>
-                  <div ><img src="../views/images/email_default.png"><p>Email</p></div>
           </div>
-        <!--  <div class="container" style="background-color: white">
+          <div class="callEmail">
+            <div><img src="../views/images/call_default.png">
+              <p>Call</p>
+            </div>
+            <div><img src="../views/images/email_default.png">
+              <p>Email</p>
+            </div>
+          </div>
+          <!--  <div class="container" style="background-color: white">
             <div class="row-fluid">
               <div class="span8 pull-right">
                   <img src="../views/images/call_default.png">
@@ -148,19 +156,19 @@
                <img src="../views/images/email_default.png">
                </div>
             </div>
-          </div> -->       
+          </div> -->
           <!-- app-location captures url and assigns _route value -->
           <app-location id="carbonLocation" route="{{_route}}" use-hash-as-path>
           </app-location>
           <!-- /dashboards route and view -->
           <app-route route="[[_route]]" pattern="/dashboards" active="{{_dashboardsActive}}">
           </app-route>
-          <px-view active="[[_dashboardsActive]]" element-href="/elements/views/dashboards-view.html">
+          <px-view active="[[_dashboardsActive]]" element-href="/elements/views/blankpage-view.html">
           </px-view>
           <!-- /blankpage route and view -->
-          <app-route route="[[_route]]" pattern="/blankpage" active="{{_blankpageActive}}">
+          <app-route route="[[_route]]" pattern="/myusage" active="{{_blankpageActive}}">
           </app-route>
-          <px-view active="[[_blankpageActive]]" element-href="/elements/views/blankpage-view.html">
+          <px-view active="[[_blankpageActive]]" element-href="/elements/views/dashboards-view.html">
           </px-view>
           <!-- /winddata route and view -->
           <app-route route="[[_route]]" pattern="/winddata" active="{{_winddataActive}}">
