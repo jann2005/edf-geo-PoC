@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 
 
-
 @EnableAutoConfiguration(exclude =
     {
         //Add any configuration loading call you want to exclude
@@ -35,6 +34,6 @@ public class Application
         ApplicationContext ctx = springApplication.run(args);
 
     }
-    
+
 
 }

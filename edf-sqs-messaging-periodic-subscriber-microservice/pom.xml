@@ -84,8 +84,18 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -104,6 +114,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1206-jdbc42</version>
 		</dependency>
 
 
@@ -133,6 +152,30 @@
 			<version>2.6.6</version>
 		</dependency>
 
+		<!--dependency>
+			<groupId>com.predix.iot.bcs</groupId>
+			<artifactId>predix-bcs-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency-->
+		<!-- http://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+		</dependency><!-- http://mvnrepository.com/artifact/com.google.code.gson/gson -->
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.4</version>
+		</dependency>
+		
+		<!-- health check module -->
+		<!--dependency>
+			<groupId>com.predix.iot.healthcheck</groupId>
+			<artifactId>predix-healthcheck-common</artifactId>
+			<version>1.0.0</version>
+		</dependency-->
 	</dependencies>
 
 	<dependencyManagement>
