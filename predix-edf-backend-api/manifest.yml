@@ -1,0 +1,16 @@
+---
+applications:
+  - name: predix-edf-backend-api
+    buildpack: java_buildpack
+    path: target/predix-edf-api-1.1.12.jar
+    memory: 512M
+    timeout : 180
+env:
+   SPRING_PROFILES_ACTIVE : cloud  
+   JAVA_DOCS_URL : https://predixdev.github.io/predix-microservice-cf-spring
+   USERNAME : ge-user
+   PASSWORD : Gr33nD3v1c3_
+   TRIGGER_URL : http://solo3.energynote.eu/api/supportapi/system/trigger-fastupdate/
+   URI LOGIN_URI : http://solo3.energynote.eu/api/userapi/account/login
+
+

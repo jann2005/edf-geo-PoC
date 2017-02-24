@@ -1,5 +1,5 @@
 applications:
-  - name: predix-edf-messaging-subscriber-live
+  - name: predix-edf-messaging-subscriber-geo-live
     buildpack: java_buildpack
     instances: 1 
     memory: 2G

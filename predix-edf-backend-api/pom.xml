@@ -3,18 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.predix.iot.edf.sqs.messaging.subscriber.live</groupId>
-	<artifactId>predix-edf-messaging-subscriber-live</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>predix-edf-messaging-subscriber-live</name>
-	<description>predix-edf-messaging-subscriber-live</description>
+	<groupId>com.ge.predix.iot.pae.edf.api</groupId>
+	<artifactId>predix-edf-api</artifactId>
+	<version>1.1.12</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.3.RELEASE</version>
+		<version>1.2.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -25,12 +21,20 @@
 		<httpcomponents.version>4.5.2</httpcomponents.version>
 		<java.version>1.8</java.version>
 		<spring-cloud-core.version>1.1.1.RELEASE</spring-cloud-core.version>
+
 		<maven-compiler-plugin.version>2.3.1</maven-compiler-plugin.version>
 		<maven-failsafe-plugin.version>2.12</maven-failsafe-plugin.version>
+		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 		<jacoco.version>0.7.2.201409121644</jacoco.version>
+		<springfox.version>2.5.0</springfox.version>
+		<maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>		
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -45,138 +49,20 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-		</dependency>
-		<!--dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-server</artifactId>
-		</dependency-->
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.9.6</version>
-		</dependency>
-		<dependency>
-			<groupId>geo.client.library.schema</groupId>
-			<artifactId>clientlibrary</artifactId>
-			<version>1.0-LOCAL</version>
-		</dependency>
-		<!-- <dependency> <groupId>com.ge.predix.timeseries</groupId> <artifactId>timeseries-client</artifactId> 
-			<version>0.0.6</version> </dependency> -->
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
-			<version>1.0.0</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jersey</artifactId>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.4-1206-jdbc42</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-spring-service-connector</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.6.6</version>
-		</dependency><!-- <dependency> <groupId>com.predix.iot.bcs</groupId> <artifactId>predix-bcs-common</artifactId> 
-			<version>0.0.1-SNAPSHOT</version> </dependency> -->
-		<!-- http://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>1.4</version>
-		</dependency><!-- http://mvnrepository.com/artifact/com.google.code.gson/gson -->
-
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>2.10.4</version>
-		</dependency>
-
-		<!-- health check module -->
-		<!-- <dependency> <groupId>com.predix.iot.healthcheck</groupId> <artifactId>predix-healthcheck-common</artifactId> 
-			<version>1.0.0</version> </dependency> -->
 	</dependencies>
 
 	<dependencyManagement>
@@ -216,6 +102,7 @@
 				<artifactId>cxf-rt-transports-http-jetty</artifactId>
 				<version>${cxf.version}</version>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -328,6 +215,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<overWrite>true</overWrite>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</artifactItem>
+					</artifactItems>
+				</configuration>				
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -364,5 +272,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+	
 </project>
