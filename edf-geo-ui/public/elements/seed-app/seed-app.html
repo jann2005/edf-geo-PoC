@@ -66,12 +66,18 @@
         height: 60px;
         padding: 10px;
       }
-
       main {
         background: url('../views/images/2.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
+      }
+      .callEmail{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        background: white;
+        padding: 10px 10px 0px 20px;
       }
 
     </style>
@@ -128,7 +134,21 @@
                 </li>
               </ul>
             </div>
+          </div> 
+          <div class="callEmail">
+                  <div ><img src="../views/images/call_default.png"><p>Call</p></div>
+                  <div ><img src="../views/images/email_default.png"><p>Email</p></div>
           </div>
+        <!--  <div class="container" style="background-color: white">
+            <div class="row-fluid">
+              <div class="span8 pull-right">
+                  <img src="../views/images/call_default.png">
+              </div>
+               <div class="span8 text-right">
+               <img src="../views/images/email_default.png">
+               </div>
+            </div>
+          </div> -->       
           <!-- app-location captures url and assigns _route value -->
           <app-location id="carbonLocation" route="{{_route}}" use-hash-as-path>
           </app-location>
