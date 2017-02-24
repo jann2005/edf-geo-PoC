@@ -75,7 +75,7 @@ public class SQSListener implements MessageListener {
                 Long electricReadingTimestamp = null;
                 for (StructureFactory.MeterReadingSmets2 temp : meterReadingSmets2s) {
                     List<DataPoint> dataPoints = new ArrayList<>();
-                    DataPoint dataPoint = new DataPoint(temp.getReadingTime(), temp.getTotalConsumption());
+                    DataPoint dataPoint = new DataPoint(temp.getReadingTime()*1000, temp.getTotalConsumption());
                     dataPoints.add(dataPoint);
                     String
                         timeseriesPayload =
@@ -86,11 +86,11 @@ public class SQSListener implements MessageListener {
                     String responseStr = response.getMessageId() + response.getStatusCode();
                     LOGGER.info("Time series response :" + responseStr);
                     if (temp.getCommodityType().toString().equalsIgnoreCase("ELECTRICITY")) {
-                        electricReadingTimestamp = temp.getReadingTime();
+                        electricReadingTimestamp = temp.getReadingTime()*1000;
                     }
 
                     if (temp.getCommodityType().toString().equalsIgnoreCase("GAS_ENERGY")) {
-                        gasReadingTimestamp = temp.getReadingTime();
+                        gasReadingTimestamp = temp.getReadingTime()*1000;
                     }
 
 

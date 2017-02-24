@@ -9,6 +9,7 @@ import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 
@@ -27,9 +28,13 @@ public class JMSSQSConfig {
     @Autowired
     private SQSListener sqsListener;
 
+    @Autowired
+    private Environment environment;
+
+
     @Bean
     public DefaultMessageListenerContainer jmsListenerContainer() {
-
+        //endpoint = environment.getProperty("");
         SQSConnectionFactory sqsConnectionFactory = SQSConnectionFactory.builder()
             .withAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider())
            // .withAWSCredentialsProvider(awsCredentialsProvider)
@@ -65,7 +70,7 @@ public class JMSSQSConfig {
     private final AWSCredentialsProvider awsCredentialsProvider = new AWSCredentialsProvider() {
         @Override
         public AWSCredentials getCredentials() {
-            return new BasicAWSCredentials("AKIAIG4P7CE7YCRTP55A", "Uz8O1r/1I4VtJYWjcI+k2WaRIEFreOjx775rSjc2");
+            return new BasicAWSCredentials( environment.getProperty("AWS_ACCESS_KEY_ID"), environment.getProperty("AWS_SECRET_KEY"));
         }
 
         @Override
