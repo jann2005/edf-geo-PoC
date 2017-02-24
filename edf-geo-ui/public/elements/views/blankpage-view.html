@@ -8,6 +8,7 @@
 <link rel="import" href="../../bower_components/px-gauge/px-gauge.html">
 <link rel="import" href="./styles/blankpage-view-styles.html">
 <link rel="import" href="../../bower_components/Px-Progress-Bar/Px-Progress-Bar.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <!--<link rel="import" href="../../bower_components/highcharts-chart/highcharts-chart.html">-->
 <dom-module id="blankpage-view">
   <template>
@@ -58,6 +59,10 @@
       }
 
     </style>
+    <iron-ajax id="getlastMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
+      body="{{_paramGenerator('lastMonth')}}" loading="{{loading2d}}" handle-as="json" on-response="_handleLastMonthData"></iron-ajax>
+    <iron-ajax id="getThisMonthData" auto url="/predix-api/predix-timeseries/v1/datapoints" method="POST" content-type="application/json"
+      body="{{_paramGenerator('thisMonth')}}" loading="{{loading2d}}" handle-as="json" on-response="_handleThisMonthData"></iron-ajax>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <div class="container mt15">
@@ -142,8 +147,8 @@
                 <div class="col-xs-10">
                   <div class="col-xs-4 text-center" style="margin-top:9%;">
                     <div class="lastmonth">
-                      <div class="lastmonthUnits"><span>{{lastMonth.energy}}</span><sup>kWh</sup></div>
-                      <div class="lastmonthPrice"><i class="fa fa-gbp" aria-hidden="true"></i>{{lastMonth.energy}}</div>
+                      <div class="lastmonthUnits"><span>{{lastMonth.energy.total}}</span><sup>kWh</sup></div>
+                      <div class="lastmonthPrice"><i class="fa fa-gbp" aria-hidden="true"></i>{{lastMonth.cost.total}}</div>
                       <div class="lastmonthHour usage-title">Last Month</div>
                     </div>
                   </div>
@@ -162,7 +167,7 @@
                     <div class="forecast">
                       <div class="forecastUnits">200<sup>kWh</sup></div>
                       <div class="forecastPrice"><i class="fa fa-gbp" aria-hidden="true"></i>180</div>
-                      <div class="forecastHour usage-title">Forecast for <span style="color: #ffa500">Feb</span></div>
+                      <div class="forecastHour usage-title">Forecast for <span style="color: #ffa500">{{_getMonthName()}}</span></div>
                     </div>
                   </div>
                 </div>
@@ -189,7 +194,6 @@
                   <div style="float: left; line-height: 50px; font-size: 1.3rem;">
                     Energy Now
                   </div>
-                  <div style="float: right; line-height: 50px;">£/KW</div>
                 </div>
                 <div id="chart"></div>
               </div>
@@ -251,101 +255,35 @@
         lastMonth: {
           type: Object,
           value: {
-            energy: 198,
-            cost: 178
+            energy: {
+              gas: 3,
+              electricity: 5,
+              total: 8
+            },
+            cost: {
+              gas: 6,
+              electricity: 4,
+              total: 10
+            }
+          }
+        },
+
+        thisMonth: {
+          type: Object,
+          value: {
+            energy: {
+              gas: 0,
+              electricity: 0
+            },
+            cost: {
+              gas: 0,
+              electricity: 0
+            }
           }
         }
       },
       ready: function () {
         setTimeout(function () {
-          var gaugeOptions = {
-
-            chart: {
-              type: 'solidgauge',
-              height: 200
-            },
-
-            title: null,
-
-            credits: {
-              enabled: false
-            },
-
-            pane: {
-              center: ['50%', '50%'],
-              size: '100%',
-              startAngle: 0,
-              endAngle: 360,
-              background: {
-                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-                innerRadius: '90%',
-                outerRadius: '100%',
-                shape: 'arc'
-              }
-            },
-
-            tooltip: {
-              enabled: false
-            },
-
-            // the value axis
-            yAxis: {
-              stops: [
-                [0.100, '#55BF3B'], // green
-                // [0.5, '#DDDF0D'], // yellow
-                // [0.9, '#DF5353'] // red
-              ],
-              lineWidth: 0,
-              minorTickInterval: null,
-              tickAmount: 2,
-              // title: {
-              //   y: -70
-              // },
-              // labels: {
-              //   y: 16
-              // }
-            },
-
-            plotOptions: {
-              solidgauge: {
-                innerRadius: '90%',
-                dataLabels: {
-                  y: -20,
-                  borderWidth: 0,
-                  useHTML: true
-                }
-              }
-            }
-          };
-
-          var chartRpm = Highcharts.chart('gaugeChart', Highcharts.merge(gaugeOptions, {
-            yAxis: {
-              min: 0,
-              max: 100,
-              title: {
-                text: ''
-              },
-              labels: {
-                enabled: false
-              }
-            },
-
-            series: [{
-              name: 'RPM',
-              data: [70],
-              dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px;color:red">80 <sup>kWh</sup></span><br/>' +
-                  '<span style="font-size:20px;"><i class="fa fa-gbp" aria-hidden="true"></i> 0.9</span><br/>' +
-                  '<span style="font-size:12px;">per hour</span></div>'
-              },
-              tooltip: {
-                valueSuffix: ' revolutions/min'
-              }
-            }]
-
-          }));
-
-
           var vuchart = new Highcharts.chart('chart', {
 
               chart: {
@@ -483,12 +421,263 @@
             });
         }.bind(this), 1000);
       },
-      _switchMode: function(){
+      _switchMode: function () {
         if (this.mode === 'kWh') {
           this.set('mode', '£');
+          this.set('monthlyPercent.electricity', Math.ceil(this.thisMonth.cost.electricity / (this.thisMonth.cost
+            .total *
+            1000)));
+          this.set('monthlyPercent.gas', 100 - this.monthlyPercent.electricity);
         } else {
           this.set('mode', 'kWh');
+          this.set('monthlyPercent.electricity', Math.ceil(this.thisMonth.energy.electricity / (this.thisMonth.energy
+            .total * 10)));
+          this.set('monthlyPercent.gas', 100 - this.monthlyPercent.electricity);
         }
+      },
+
+      _getLastMonthRange: function (month) {
+        var date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        return {
+          firstDay: new Date(y, m + parseInt(month), 1),
+          lastDay: new Date(y, m + 1 + parseInt(month), 0)
+        }
+      },
+
+      _calculateDatePercent: function () {
+        var today = new Date();
+        var daysOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+        var currentDay = today.getDate();
+        return Math.ceil((currentDay / daysOfMonth) * 100);
+      },
+
+      _getMonthName: function () {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        var d = new Date();
+        return monthNames[d.getMonth()];
+      },
+
+      _paramGenerator: function (mode) {
+        var param = {
+          "tags": [{
+              "name": "@38400000-8cf0-11bd-b23e-10b96e4ef00e:ELECTRICITY:Cost:Periodic",
+              "order": "desc"
+            },
+            {
+              "name": "@38400000-8cf0-11bd-b23e-10b96e4ef00e:ELECTRICITY:Total:Periodic",
+              "order": "desc"
+            },
+            {
+              "name": "@38400000-8cf0-11bd-b23e-10b96e4ef00e:GAS_ENERGY:Cost:Periodic",
+              "order": "desc"
+            },
+            {
+              "name": "@38400000-8cf0-11bd-b23e-10b96e4ef00e:GAS_ENERGY:Total:Periodic",
+              "order": "desc"
+            }
+          ],
+          "start": 0,
+          "end": -1
+        };
+        switch (mode) {
+          case 'lastMonth':
+            {
+              var lastmonth = this._getLastMonthRange(-1);
+              param.start = lastmonth.firstDay.getTime();
+              param.end = lastmonth.lastDay.getTime();
+              break;
+            }
+          case 'thisMonth':
+            {
+              var thisMonth = this._getLastMonthRange(0);
+              param.start = thisMonth.firstDay.getTime();
+              param.end = new Date().getTime();
+              break;
+            }
+        }
+        return param;
+      },
+
+      _handleLastMonthData: function (res) {
+        var tags = res.detail.response.tags;
+        var electricCost = tags[0].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+        this.set('lastMonth.cost.electricity', electricCost.shift() - electricCost.pop());
+
+
+        var gasCost = tags[2].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+        this.set('lastMonth.cost.gas', gasCost.shift() - gasCost.pop());
+        this.set('lastMonth.cost.total', Math.ceil((this.lastMonth.cost.electricity + this.lastMonth.cost.gas) /
+          100000));
+
+        var electricityEnergy = tags[1].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a;
+          });
+        this.set('lastMonth.energy.electricity', electricityEnergy.shift() - electricityEnergy.pop());
+
+        var gasEnergy = tags[3].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+
+        this.set('lastMonth.energy.gas', gasEnergy.shift() - gasEnergy.pop());
+        this.set('lastMonth.energy.total', Math.ceil((this.lastMonth.energy.electricity + this.lastMonth.energy.gas) /
+          1000));
+        console.log(this.lastMonth);
+      },
+
+      _handleThisMonthData: function (res) {
+        var tags = res.detail.response.tags;
+        var electricCost = tags[0].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+        this.set('thisMonth.cost.electricity', electricCost.shift() - electricCost.pop());
+
+
+        var gasCost = tags[2].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+        this.set('thisMonth.cost.gas', gasCost.shift() - gasCost.pop());
+        this.set('thisMonth.cost.total', Math.ceil((this.thisMonth.cost.electricity + this.thisMonth.cost.gas) /
+          100000));
+
+        var electricityEnergy = tags[1].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a;
+          });
+        this.set('thisMonth.energy.electricity', electricityEnergy.shift() - electricityEnergy.pop());
+
+        var gasEnergy = tags[3].results[0].values
+          .map(function (item) {
+            return item[1]
+          }).sort(function (a, b) {
+            return b - a
+          });
+
+        this.set('thisMonth.energy.gas', gasEnergy.shift() - gasEnergy.pop());
+        this.set('thisMonth.energy.total', Math.ceil((this.thisMonth.energy.electricity + this.thisMonth.energy.gas) /
+          1000));
+        this._renderCircleChart();
+        this._switchMode();
+        console.log(this.thisMonth);
+      },
+
+      _renderCircleChart: function () {
+        var datePercent = this._calculateDatePercent();
+
+        var gaugeOptions = {
+
+          chart: {
+            type: 'solidgauge',
+            height: 200
+          },
+
+          title: null,
+
+          credits: {
+            enabled: false
+          },
+
+          pane: {
+            center: ['50%', '50%'],
+            size: '100%',
+            startAngle: 0,
+            endAngle: 360,
+            background: {
+              backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+              innerRadius: '90%',
+              outerRadius: '100%',
+              shape: 'arc'
+            }
+          },
+
+          tooltip: {
+            enabled: false
+          },
+
+          // the value axis
+          yAxis: {
+            stops: [
+              [0.100, '#55BF3B'], // green
+              // [0.5, '#DDDF0D'], // yellow
+              // [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            // title: {
+            //   y: -70
+            // },
+            // labels: {
+            //   y: 16
+            // }
+          },
+
+          plotOptions: {
+            solidgauge: {
+              innerRadius: '90%',
+              dataLabels: {
+                y: -20,
+                borderWidth: 0,
+                useHTML: true
+              }
+            }
+          }
+        };
+
+        var chartRpm = Highcharts.chart('gaugeChart', Highcharts.merge(gaugeOptions, {
+          yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+              text: ''
+            },
+            labels: {
+              enabled: false
+            }
+          },
+
+          series: [{
+            name: 'RPM',
+            data: [datePercent],
+            dataLabels: {
+              format: '<div style="text-align:center"><span style="font-size:25px;color:red">' + this.thisMonth.energy.total + ' <sup>kWh</sup></span><br/>' +
+                '<span style="font-size:20px;"><i class="fa fa-gbp" aria-hidden="true"></i> ' + this.thisMonth.cost.total + '</span><br/>' +
+                '</div>'
+            },
+            tooltip: {
+              valueSuffix: ' revolutions/min'
+            }
+          }]
+
+        }));
       }
     });
 
