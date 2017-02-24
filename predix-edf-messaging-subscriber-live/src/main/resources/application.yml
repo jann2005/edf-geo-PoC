@@ -1,0 +1,249 @@
+spring:
+  profiles.active: dev
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url:  jdbc:postgresql://localhost:5432/intelipump
+    username: postgres
+    password: postgres
+  jpa:
+    database:  POSTGRESQL
+  redis:
+    host: localhost
+    port: 6379
+     
+uaa:
+  clientId: bcs
+  clientSecret: bcs
+  uri: https://091998f5-1a50-4bb5-a057-09a2e91a57a9.predix-uaa.run.aws-usw02-pr.ice.predix.io
+  clientBase64Token: YmNzOmJjcw==
+
+asset:
+ uri: https://predix-asset.run.aws-usw02-pr.ice.predix.io
+ instanceId: 90d54c07-93e2-4886-bfc0-2c81a70e8e67
+
+acs:
+  uri: https://predix-acs.run.aws-usw02-pr.ice.predix.io
+  instanceId: 6ea94be8-839c-4066-890e-13a106480c79
+  name: predix_wts_acs_dev
+
+backend:
+  uri: http://predix-wts-backend-api-dev.run.aws-usw02-pr.ice.predix.io
+  
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: false
+    redis:
+      enabled: true
+    asset:
+      enabled: true
+    timeseries: 
+      enabled: false
+  
+info:
+  build:
+    artifact: @project.artifactId@
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+---
+spring:
+  profiles: cloud
+  datasource:
+    test-while-idle: true
+          
+      
+uaa:
+  clientId: ${CLIENT_ID}
+  clientSecret: ${CLIENT_SECRET}
+  clientBase64Token: ${CLIENT_BASE64_TOKEN}
+  uri: ${UAA_URI}
+
+asset:
+ uri: ${ASSET_URI}
+ instanceId: ${ASSET_INSTANCE_ID}
+ assetHealthSuffix: ${ASSET_HEALTH_SUFFIX}
+
+acs:
+  uri: ${UAA_URI}
+  instanceId: ${UAA_INSTANCE_ID}
+  name: ${PREDIX_ACS_NAME}
+
+endpoints:
+  health: 
+    sensitive:  false
+      
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: false
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: false
+    redis:
+      enabled: true
+    asset:
+      enabled: true
+  
+info:
+  build:
+    artifact: @project.artifactId@
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+---
+spring:
+  profiles: unit-test
+
+uaa:
+  clientId: dangndq-client
+  clientSecret: secret
+  uri: http://localhost:8888
+  clientBase64Token: ZGFuZ25kcS1jbGllbnQ6c2VjcmV0
+  name: predix_wts_uaa_dev
+
+asset:
+ uri: https://predix-asset.run.aws-usw02-pr.ice.predix.io
+ instanceId: 90d54c07-93e2-4886-bfc0-2c81a70e8e67
+
+acs:
+  uri: http://localhost:8888
+  instanceId: 6ea94be8-839c-4066-890e-13a106480c79
+  name: predix_wts_acs_dev
+
+backend:
+  uri: http://localhost:8888
+  
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: false
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: false
+    redis:
+      enabled: true
+    asset:
+      enabled: true
+    timeseries: 
+      enabled: false
+  
+info:
+  build:
+    artifact: @project.artifactId@
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+---
+spring:
+  profiles: basic_qa
+
+uaa:
+  clientId: bcs
+  clientSecret: bcs
+  uri: https://a1c749d2-c961-42a7-af0c-0854f45e0713.predix-uaa.run.aws-usw02-pr.ice.predix.io
+  clientBase64Token: YmNzOmJjcw==
+  name: predix_bcs_uaa_dev
+
+asset:
+  uri: https://predix-asset.run.aws-usw02-pr.ice.predix.io
+  instanceId: 1178c2ea-5314-4e0a-9595-5f0041f577ac
+
+acs:
+  uri: http://localhost:8888
+  instanceId: 6ea94be8-839c-4066-890e-13a106480c79
+  name: predix_bcs_acs_dev
+
+backend:
+    uri: http://localhost:8888
+
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: false
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: false
+    redis:
+      enabled: true
+    asset:
+      enabled: true
+    timeseries: 
+      enabled: false
+  
+info:
+  build:
+    artifact: @project.artifactId@
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+---
+spring:
+  profiles: basic_perf
+
+uaa:
+  clientId: bcs
+  clientSecret: bcs
+  uri: https://d9bd156d-23a9-4e70-b26d-186841c0bc69.predix-uaa.run.aws-usw02-pr.ice.predix.io
+  clientBase64Token: YmNzOmJjcw==
+  name: predix_bcs_uaa_perf
+
+asset:
+  uri: https://predix-asset.run.aws-usw02-pr.ice.predix.io
+  instanceId: a90f8eba-cc3a-48e1-ac2d-af3d85bf92e4
+
+acs:
+  uri: http://localhost:8888
+  instanceId: 6ea94be8-839c-4066-890e-13a106480c79
+  name: predix_bcs_acs_dev
+
+backend:
+    uri: http://localhost:8888
+
+blobstore:
+  accessKeyId: AKIAIFT7BKTAZZU53NDA
+  secretAccessKey: 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
+  bucketName: bucket-43157e44-34b5-4941-9549-33cfc0e9e008
+  uri: 'https://bucket-43157e44-34b5-4941-9549-33cfc0e9e008.s3-us-west-2.amazonaws.com'
+  
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: false
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: false
+    redis:
+      enabled: true
+    asset:
+      enabled: true
+    timeseries: 
+      enabled: false
+  
+info:
+  build:
+    artifact: @project.artifactId@
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
