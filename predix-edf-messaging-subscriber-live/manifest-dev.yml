@@ -6,6 +6,6 @@ applications:
     path: target/predix-edf-messaging-subscriber-live-0.0.1-SNAPSHOT.jar
     env:
        AWS_ACCESS_KEY_ID: AKIAIG4P7CE7YCRTP55A
-       AWS_SECRET_KEY:  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
-       END_POINT: https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs_live
-       QUEUE_NAME: geo_predix_sqs_live
+       AWS_SECRET_KEY:
+       SQS_END_POINT: https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs_live
+       SQS_QUEUE_NAME: geo_predix_sqs_live
