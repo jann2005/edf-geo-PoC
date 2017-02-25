@@ -4,11 +4,8 @@ applications:
     instances: 1 
     memory: 2G
     path: target/predix-edf-messaging-subscriber-0.0.1-SNAPSHOT.jar
-  - queue:
-      endpoint: https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs
-      name: geo_predix_sqs
     env:
-       AWS_ACCESS_KEY_ID: AKIAIG4P7CE7YCRTP55A
+       AWS_ACCESS_KEY_ID: AKIAIRUUAHKGUA4BTTIA
        AWS_SECRET_KEY:
-       SQS_END_POINT: https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs
-       SQS_QUEUE_NAME: geo_predix_sqs
+       SQS_PERIODIC_END_POINT: https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs
+       SQS_PERIODIC_QUEUE_NAME: geo_predix_sqs

@@ -32,13 +32,13 @@ public class EDFSQSConfig {
         SQSConnectionFactory sqsConnectionFactory = SQSConnectionFactory.builder()
             .withAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider())
            // .withAWSCredentialsProvider(awsCredentialsProvider)
-            .withEndpoint(environment.getProperty("SQS_END_POINT"))
+            .withEndpoint(environment.getProperty("SQS_PERIODIC_END_POINT"))
             .withAWSCredentialsProvider(awsCredentialsProvider)
             .withNumberOfMessagesToPrefetch(10).build();
 
         DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
         dmlc.setConnectionFactory(sqsConnectionFactory);
-        dmlc.setDestinationName(environment.getProperty("SQS_QUEUE_NAME"));
+        dmlc.setDestinationName(environment.getProperty("SQS_PERIODIC_QUEUE_NAME"));
 
         dmlc.setMessageListener(sqsListener);
 
@@ -50,11 +50,11 @@ public class EDFSQSConfig {
 
         SQSConnectionFactory sqsConnectionFactory = SQSConnectionFactory.builder()
             .withAWSCredentialsProvider(awsCredentialsProvider)
-            .withEndpoint(environment.getProperty("SQS_END_POINT"))
+            .withEndpoint(environment.getProperty("SQS_PERIODIC_END_POINT"))
             .withNumberOfMessagesToPrefetch(10).build();
 
         JmsTemplate jmsTemplate = new JmsTemplate(sqsConnectionFactory);
-        jmsTemplate.setDefaultDestinationName(environment.getProperty("SQS_QUEUE_NAME"));
+        jmsTemplate.setDefaultDestinationName(environment.getProperty("SQS_PERIODIC_QUEUE_NAME"));
         jmsTemplate.setDeliveryPersistent(false);
 
 
