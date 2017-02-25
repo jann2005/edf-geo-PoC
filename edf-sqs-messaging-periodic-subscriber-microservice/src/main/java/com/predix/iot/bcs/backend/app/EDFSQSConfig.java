@@ -17,13 +17,7 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
  * Created by 212337645 on 2/16/17.
  */
 @Configuration
-public class JMSSQSConfig {
-
-   // @Value("${applications.queue.endpoint}")
-    private String endpoint="https://sqs.eu-west-1.amazonaws.com/182236743652/geo_predix_sqs";
-
-   // @Value("${applications.queue.name}")
-    private String queueName="geo_predix_sqs";
+public class EDFSQSConfig {
 
     @Autowired
     private SQSListener sqsListener;
@@ -38,13 +32,13 @@ public class JMSSQSConfig {
         SQSConnectionFactory sqsConnectionFactory = SQSConnectionFactory.builder()
             .withAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider())
            // .withAWSCredentialsProvider(awsCredentialsProvider)
-            .withEndpoint(endpoint)
+            .withEndpoint(environment.getProperty("SQS_END_POINT"))
             .withAWSCredentialsProvider(awsCredentialsProvider)
             .withNumberOfMessagesToPrefetch(10).build();
 
         DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
         dmlc.setConnectionFactory(sqsConnectionFactory);
-        dmlc.setDestinationName(queueName);
+        dmlc.setDestinationName(environment.getProperty("SQS_QUEUE_NAME"));
 
         dmlc.setMessageListener(sqsListener);
 
@@ -56,11 +50,11 @@ public class JMSSQSConfig {
 
         SQSConnectionFactory sqsConnectionFactory = SQSConnectionFactory.builder()
             .withAWSCredentialsProvider(awsCredentialsProvider)
-            .withEndpoint(endpoint)
+            .withEndpoint(environment.getProperty("SQS_END_POINT"))
             .withNumberOfMessagesToPrefetch(10).build();
 
         JmsTemplate jmsTemplate = new JmsTemplate(sqsConnectionFactory);
-        jmsTemplate.setDefaultDestinationName(queueName);
+        jmsTemplate.setDefaultDestinationName(environment.getProperty("SQS_QUEUE_NAME"));
         jmsTemplate.setDeliveryPersistent(false);
 
 
