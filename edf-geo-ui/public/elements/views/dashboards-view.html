@@ -75,6 +75,10 @@
         margin: 30px 0 0;
         height: 400px;
       }
+
+      .active {
+        color: #60bd68;
+      }
       
        :host {
         --px-dropdown-bg-color--default: $white;
@@ -103,7 +107,7 @@
           </div>
         </div>
         <div class="modal-toolbar layout">
-          <div class="layout__item u-1/2" style="position: relative;">
+          <div class="layout__item u-1/2" style="padding-top: 5px; color: #e2e8ed;">
             <!--<div class="layout" style="line-height: 30.97px;">
               <div class="item-option">
                 <label><input type="checkbox" value="">Electricity</label>
@@ -115,10 +119,11 @@
                 <label><input type="checkbox" value="">Total</label>
               </div>
             </div>-->
+            <div style="display: inline-block; height: 100%; vertical-align: middle; margin-right: 10px;"><i class$="{{_computeClass('cost', mode)}}" aria-hidden="true"></i></div>
             <input id="switchBtn" type="checkbox" class="toggle__input toggle__input--small">
-            <label on-tap="_switchMode" style="position: absolute; left: 0; top: 0; bottom: 0; margin: auto;" for="switchBtn" class="toggle__label toggle__label--small">
+            <label on-tap="_switchMode" style="display: inline-block; margin: 0; margin-right: 10px;" for="switchBtn" class="toggle__label toggle__label--small">
             </label>
-            <div style="margin-left: 35px; line-height: 30px;">{{mode}}</div>
+            <div style="display: inline-block; height: 100%; vertical-align: middle; margin-right: 10px;"><i class$="{{_computeClass('total', mode)}}" aria-hidden="true"></i></div>
           </div>
           <div class="layout__item u-1/2" style="text-align: right;">
             <div style="width: 100px; float: right;">
@@ -487,6 +492,19 @@
 
       _getToday: function(){
         return moment().format('LLLL');
+      },
+
+      _computeClass: function(type, mode){
+        var output = '';
+        if (type === 'cost') {
+          output = 'fa fa-money';
+          if (mode == '£') output = output + ' active';
+          return output;
+        } else {
+          output = 'fa fa-tachometer';
+          if (mode == 'kWh') output = output + ' active';
+          return output;
+        }
       }
 
     });
